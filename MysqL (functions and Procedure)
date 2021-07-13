@@ -1,0 +1,44 @@
+--create procedure to read table
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `myproc`(tableName varchar(50))
+BEGIN
+SET @sql_ =CONCAT('SELECT * FROM ',tableName);
+PREPARE statement_ FROM @sql_;
+EXECUTE statement_;
+END
+
+// call myproc(tableName);
+
+//Create Function 
+
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `CalcIncome`( starting_value varchar(50) ) RETURNS varchar(50) CHARSET utf8mb4
+    READS SQL DATA
+    DETERMINISTIC
+BEGIN
+
+   DECLARE income varchar(50);
+
+set income =concat(starting_value, "ahmed"); 
+
+   RETURN income;
+
+END
+
+// Select CalcIncome("demir"); 
+//Select *,CalcIncome(name) from mytable;
+
+// add constarins to procedure
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `myproc`(tableName varchar(50) , conditions varchar(100))
+BEGIN
+SET @sql_ =CONCAT('SELECT * FROM ',tableName , ' where ', conditions);
+PREPARE statement_ FROM @sql_;
+EXECUTE statement_;
+END
+
+
+// Call Procedure
+
+call myproc('users','user_id>1');
